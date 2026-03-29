@@ -11,7 +11,7 @@ import type { Device } from "../types";
 
 interface MirrorScreenProps {
   connectedDevice: Device;
-  connecting: boolean;
+  connecting?: boolean;
   deviceSize: { width: number; height: number };
   canvasRef: React.RefObject<HTMLCanvasElement | null>;
   isMouseDown: React.MutableRefObject<boolean>;

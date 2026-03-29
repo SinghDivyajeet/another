@@ -13,7 +13,7 @@ import appIcon from "../assets/icon.png";
 
 interface WelcomeScreenProps {
   devices: Device[];
-  connecting: boolean;
+  connectingSerial: string | null;
   themePref: ThemePreference;
   onCycleTheme: () => void;
   onOpenSettings: () => void;
@@ -27,7 +27,7 @@ function truncateSerial(s: string) {
 
 export function WelcomeScreen({
   devices,
-  connecting,
+  connectingSerial,
   themePref,
   onCycleTheme,
   onOpenSettings,
@@ -72,7 +72,7 @@ export function WelcomeScreen({
             <div
               key={d.serial}
               className="device-card"
-              onClick={() => !connecting && onConnectDevice(d)}
+              onClick={() => !connectingSerial && onConnectDevice(d)}
             >
               <div className="device-card-icon">
                 <DevicePhoneMobileIcon />
@@ -82,7 +82,7 @@ export function WelcomeScreen({
                 <div className="device-card-serial">{truncateSerial(d.serial)}</div>
               </div>
               <div className="device-card-arrow">
-                {connecting ? <div className="spinner" /> : <ChevronRightIcon />}
+                {connectingSerial === d.serial ? <div className="spinner-sm" /> : <ChevronRightIcon />}
               </div>
             </div>
           ))

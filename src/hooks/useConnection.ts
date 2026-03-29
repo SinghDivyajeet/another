@@ -25,7 +25,7 @@ export function useConnection(opts: UseConnectionOptions) {
   const { showToast } = opts;
   const [screen, setScreen] = useState<Screen>("welcome");
   const [connectedDevice, setConnectedDevice] = useState<Device | null>(null);
-  const [connecting, setConnecting] = useState(false);
+  const [connectingSerial, setConnectingSerial] = useState<string | null>(null);
   const [deviceSize, setDeviceSize] = useState({ width: 1080, height: 1920 });
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const decoderRef = useRef<VideoDecoder | null>(null);
@@ -51,7 +51,7 @@ export function useConnection(opts: UseConnectionOptions) {
   }, []);
 
   const connectToDevice = useCallback(async (device: Device, s: Settings, silent = false) => {
-    setConnecting(true);
+    setConnectingSerial(device.serial);
     cleanupDecoder();
     try {
       const channel = new Channel<FrameEvent>();
@@ -129,7 +129,7 @@ export function useConnection(opts: UseConnectionOptions) {
     } catch (e) {
       if (!silent) showToast(`Failed to connect: ${e}`);
     } finally {
-      setConnecting(false);
+      setConnectingSerial(null);
       isReconnecting.current = false;
     }
   }, [showToast, cleanupDecoder]);
@@ -221,7 +221,7 @@ export function useConnection(opts: UseConnectionOptions) {
   return {
     screen,
     connectedDevice,
-    connecting,
+    connectingSerial,
     deviceSize,
     canvasRef,
     isMouseDown,

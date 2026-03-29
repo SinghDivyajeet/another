@@ -37,7 +37,7 @@ function App() {
   const {
     screen,
     connectedDevice,
-    connecting,
+    connectingSerial,
     deviceSize,
     canvasRef,
     isMouseDown,
@@ -75,7 +75,7 @@ function App() {
       {screen === "welcome" ? (
         <WelcomeScreen
           devices={devices}
-          connecting={connecting}
+          connectingSerial={connectingSerial}
           themePref={themePref}
           onCycleTheme={cycleTheme}
           onOpenSettings={() => setShowSettings(true)}
@@ -85,7 +85,6 @@ function App() {
       ) : connectedDevice ? (
         <MirrorScreen
           connectedDevice={connectedDevice}
-          connecting={connecting}
           deviceSize={deviceSize}
           canvasRef={canvasRef}
           isMouseDown={isMouseDown}
